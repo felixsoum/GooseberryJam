@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour
 {
     public GameObject humanPrefab;
     public Transform humansTransform;
+    public Vision vision;
 
     List<Human> humans = new List<Human>();
 
@@ -16,6 +17,13 @@ public class GameController : MonoBehaviour
 
     void SpawnHumans(int count)
     {
+        if (humans.Count > 0)
+        {
+            foreach (var human in humans)
+            {
+                human.Die();
+            }
+        }
         humans.Clear();
         for (int i = 0; i < count; i++)
         {
@@ -32,6 +40,7 @@ public class GameController : MonoBehaviour
 
     public void ActivateVision()
     {
+        vision.Activate();
         foreach (var human in humans)
         {
             human.ShowMark();
@@ -40,6 +49,7 @@ public class GameController : MonoBehaviour
 
     public void DeactivateVision()
     {
+        vision.Deactivate();
         foreach (var human in humans)
         {
             human.HideMark();
@@ -49,5 +59,10 @@ public class GameController : MonoBehaviour
     public Vector3 GetHumanSpawnPos()
     {
         return new Vector3(Random.Range(-Util.XMax, Util.XMax), Random.Range(-Util.YMax, Util.YMax), 0);
+    }
+
+    public void Reset()
+    {
+        SpawnHumans(4);
     }
 }

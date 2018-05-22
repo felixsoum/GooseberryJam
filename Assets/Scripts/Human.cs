@@ -70,4 +70,9 @@ public class Human : MonoBehaviour
     {
         gameController = gc;
     }
+
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
 }
