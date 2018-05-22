@@ -6,6 +6,7 @@ public class Human : MonoBehaviour
 {
     public GameObject judgementMark;
     public bool IsMarked { get; set; }
+    public Animator animator;
 
     new Rigidbody2D rigidbody;
     GameController gameController;
@@ -25,6 +26,7 @@ public class Human : MonoBehaviour
         isDragged = true;
         rigidbody.isKinematic = true;
         gameController.DeactivateVision();
+        animator.SetTrigger("PickUp");
     }
 
     void OnMouseUp()
@@ -32,6 +34,16 @@ public class Human : MonoBehaviour
         isDragged = false;
         rigidbody.isKinematic = false;
         rigidbody.velocity = Vector3.zero;
+        animator.SetTrigger("Drop");
+    }
+
+    void Update()
+    {
+        animator.SetBool("IsWalking", rigidbody.velocity.magnitude > 0.075f);
+        Vector3 pos = transform.position;
+        pos.z = pos.y;
+        transform.position = pos;
+        
     }
 
     void FixedUpdate()
