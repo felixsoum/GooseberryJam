@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        SpawnHumans(4);
+        SpawnHumans(8);
     }
 
     void SpawnHumans(int count)
@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour
 
             if (i < count/2)
             {
-                human.IsMarked = true;
+                human.Mark();
             }
         }
     }
@@ -63,6 +63,6 @@ public class GameController : MonoBehaviour
 
     public void Reset()
     {
-        SpawnHumans(4);
+        SpawnHumans(8);
     }
 }

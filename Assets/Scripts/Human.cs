@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Human : MonoBehaviour
 {
-    public GameObject judgementMark;
     public bool IsMarked { get; set; }
     public Animator animator;
+    public SpriteRenderer humanSprite;
+    public SpriteRenderer spiritSprite;
 
     new Rigidbody2D rigidbody;
     GameController gameController;
@@ -67,15 +68,14 @@ public class Human : MonoBehaviour
 
     public void ShowMark()
     {
-        if (IsMarked)
-        {
-            judgementMark.SetActive(true);
-        }
+        humanSprite.enabled = false;
+        spiritSprite.enabled = true;
     }
 
     public void HideMark()
     {
-        judgementMark.SetActive(false);
+        humanSprite.enabled = true;
+        spiritSprite.enabled = false;
     }
 
     public void SetGameController(GameController gc)
@@ -86,5 +86,11 @@ public class Human : MonoBehaviour
     public void Die()
     {
         Destroy(gameObject);
+    }
+
+    public void Mark()
+    {
+        IsMarked = true;
+        spiritSprite.color = Color.red;
     }
 }
