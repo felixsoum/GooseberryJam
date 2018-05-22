@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Human : MonoBehaviour
 {
+    public GameObject judgementMark;
+    public bool IsMarked { get; set; }
+
     new Rigidbody2D rigidbody;
+    GameController gameController;
     bool isDragged;
     float wanderTimeMin = 1;
     float wanderTimeMax = 5;
@@ -20,12 +24,14 @@ public class Human : MonoBehaviour
     {
         isDragged = true;
         rigidbody.isKinematic = true;
+        gameController.DeactivateVision();
     }
 
     void OnMouseUp()
     {
         isDragged = false;
         rigidbody.isKinematic = false;
+        rigidbody.velocity = Vector3.zero;
     }
 
     void FixedUpdate()
@@ -47,4 +53,21 @@ public class Human : MonoBehaviour
         Invoke("Wander", Random.Range(wanderTimeMin, wanderTimeMax));
     }
 
+    public void ShowMark()
+    {
+        if (IsMarked)
+        {
+            judgementMark.SetActive(true);
+        }
+    }
+
+    public void HideMark()
+    {
+        judgementMark.SetActive(false);
+    }
+
+    public void SetGameController(GameController gc)
+    {
+        gameController = gc;
+    }
 }
