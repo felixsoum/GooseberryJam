@@ -205,6 +205,9 @@ MonoBehaviour:
   animator: {fileID: 95727708031933494}
   humanSprite: {fileID: 212497642437011862}
   spiritSprite: {fileID: 212607568090644948}
+  deathEffectPrefab: {fileID: 1347614231918418, guid: 5252d54d4b6f09849a530ee33296e416,
+    type: 2}
+  feetCollider: {fileID: 61591585673596566}
 --- !u!212 &212497642437011862
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -7,8 +7,9 @@ public class GameController : MonoBehaviour
     public GameObject humanPrefab;
     public Transform humansTransform;
     public Vision vision;
-
+    const float killDistance = 1.25f;
     List<Human> humans = new List<Human>();
+    int correctKillCount;
 
     void Start()
     {
@@ -17,13 +18,6 @@ public class GameController : MonoBehaviour
 
     void SpawnHumans(int count)
     {
-        if (humans.Count > 0)
-        {
-            foreach (var human in humans)
-            {
-                human.Die();
-            }
-        }
         humans.Clear();
         for (int i = 0; i < count; i++)
         {
@@ -61,8 +55,33 @@ public class GameController : MonoBehaviour
         return new Vector3(Random.Range(-Util.XMax, Util.XMax), Random.Range(-Util.YMax, Util.YMax), 0);
     }
 
+    public void Kill()
+    {
+        if (humans.Count > 0)
+        {
+            foreach (var human in humans)
+            {
+                if (Vector3.Distance(human.transform.position, Vector3.zero) <= killDistance)
+                {
+                    if (human.IsMarked)
+                    {
+                        correctKillCount++;
+                    }
+                    human.Kill();
+                }
+            }
+        }
+    }
+
     public void Reset()
     {
+        if (humans.Count > 0)
+        {
+            foreach (var human in humans)
+            {
+                human.Die();
+            }
+        }
         SpawnHumans(8);
     }
 }

@@ -8,6 +8,8 @@ public class Human : MonoBehaviour
     public Animator animator;
     public SpriteRenderer humanSprite;
     public SpriteRenderer spiritSprite;
+    public GameObject deathEffectPrefab;
+    public Collider2D feetCollider;
 
     new Rigidbody2D rigidbody;
     GameController gameController;
@@ -15,6 +17,8 @@ public class Human : MonoBehaviour
     float wanderTimeMin = 1;
     float wanderTimeMax = 5;
     float wanderForce = 2;
+    bool isAlive = true;
+    float killForce = 50;
 
     void Awake()
     {
@@ -24,6 +28,10 @@ public class Human : MonoBehaviour
 
 	void OnMouseDown()
     {
+        if (!isAlive)
+        {
+            return;
+        }
         isDragged = true;
         rigidbody.isKinematic = true;
         gameController.DeactivateVision();
@@ -32,6 +40,10 @@ public class Human : MonoBehaviour
 
     void OnMouseUp()
     {
+        if (!isAlive)
+        {
+            return;
+        }
         isDragged = false;
         rigidbody.isKinematic = false;
         rigidbody.velocity = Vector3.zero;
@@ -40,11 +52,24 @@ public class Human : MonoBehaviour
 
     void Update()
     {
-        animator.SetBool("IsWalking", rigidbody.velocity.magnitude > 0.075f);
-        Vector3 pos = transform.position;
-        pos.z = pos.y;
-        transform.position = pos;
-        
+        if (isAlive)
+        {
+            animator.SetBool("IsWalking", rigidbody.velocity.magnitude > 0.075f);
+            Vector3 pos = transform.position;
+            pos.z = pos.y;
+            transform.position = pos;
+
+            Vector3 scale = transform.localScale;
+            if (rigidbody.velocity.x > 0)
+            {
+                scale.x = -Mathf.Abs(scale.x);
+            }
+            else if (rigidbody.velocity.x < 0)
+            {
+                scale.x = Mathf.Abs(scale.x);
+            }
+            transform.localScale = scale;
+        }
     }
 
     void FixedUpdate()
@@ -59,6 +84,10 @@ public class Human : MonoBehaviour
 
     void Wander()
     {
+        if (!isAlive)
+        {
+            return;
+        }
         if (!isDragged)
         {
             rigidbody.AddForce(Random.insideUnitCircle * wanderForce, ForceMode2D.Impulse);
@@ -81,6 +110,17 @@ public class Human : MonoBehaviour
     public void SetGameController(GameController gc)
     {
         gameController = gc;
+    }
+
+    public void Kill()
+    {
+        isAlive = false;
+        ShowMark();
+        rigidbody.drag = 0;
+        rigidbody.AddForce(Vector3.up * killForce, ForceMode2D.Force);
+        Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
+        feetCollider.enabled = false;
+        Invoke("Die", 5);
     }
 
     public void Die()
