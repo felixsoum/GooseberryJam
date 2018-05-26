@@ -17,8 +17,9 @@ public class GameController : MonoBehaviour
 
     public AudioSource killAudio;
     public AudioSource visionAudio;
+    public AudioSource nextAudio;
 
-    const float killDistance = 1.25f;
+    const float killDistance = 1.5f;
     List<Human> humans = new List<Human>();
     int correctKillCount;
     public bool IsGameOver { get; private set; }
@@ -47,6 +48,10 @@ public class GameController : MonoBehaviour
         levelNumber.SetNumber(currentLevel);
         Clear();        
         SpawnHumans(currentLevel * 2);
+        if (currentLevel > 1)
+        {
+            nextAudio.Play();
+        }
     }
 
     void SpawnHumans(int count)
@@ -67,7 +72,10 @@ public class GameController : MonoBehaviour
     public void ActivateVision()
     {
         vision.Activate();
-        visionAudio.Play();
+        if (!IsGameOver)
+        {
+            visionAudio.Play();
+        }
         foreach (var human in humans)
         {
             if (human && human.gameObject)
@@ -114,7 +122,7 @@ public class GameController : MonoBehaviour
         {
             foreach (var human in humans)
             {
-                if (human && human.gameObject && human.IsAlive && Vector3.Distance(human.transform.position, Vector3.zero) <= killDistance)
+                if (human && human.gameObject && human.IsAlive && Vector3.Distance(human.GetFeetPosition(), Vector3.zero) <= killDistance)
                 {
                     if (human.IsMarked)
                     {

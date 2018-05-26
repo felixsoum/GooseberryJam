@@ -9,7 +9,7 @@ public class Human : MonoBehaviour
     public SpriteRenderer humanSprite;
     public SpriteRenderer spiritSprite;
     public GameObject deathEffectPrefab;
-    public Collider2D feetCollider;
+    public BoxCollider2D feetCollider;
 
     new Rigidbody2D rigidbody;
     GameController gameController;
@@ -122,6 +122,11 @@ public class Human : MonoBehaviour
         Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
         feetCollider.enabled = false;
         Invoke("Die", 2);
+    }
+
+    public Vector3 GetFeetPosition()
+    {
+        return transform.position + new Vector3(feetCollider.offset.x, feetCollider.offset.y, 0);
     }
 
     public void Die()
