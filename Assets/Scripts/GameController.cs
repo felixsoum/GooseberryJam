@@ -15,6 +15,9 @@ public class GameController : MonoBehaviour
     public WhiteFade whiteFade;
     public LevelNumber levelNumber;
 
+    public AudioSource killAudio;
+    public AudioSource visionAudio;
+
     const float killDistance = 1.25f;
     List<Human> humans = new List<Human>();
     int correctKillCount;
@@ -64,6 +67,7 @@ public class GameController : MonoBehaviour
     public void ActivateVision()
     {
         vision.Activate();
+        visionAudio.Play();
         foreach (var human in humans)
         {
             if (human && human.gameObject)
@@ -123,6 +127,7 @@ public class GameController : MonoBehaviour
                     human.Kill();
                 }
             }
+            killAudio.Play();
         }
 
         if (!isTransitioning && !IsGameOver && correctKillCount == currentLevel)
