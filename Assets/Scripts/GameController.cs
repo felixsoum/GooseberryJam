@@ -1,24 +1,53 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
     public GameObject humanPrefab;
     public Transform humansTransform;
     public Vision vision;
+
+    public GameObject visionButton;
+    public GameObject killButton;
+    public GameObject endPanel;
+    public GameObject killZone;
+    public WhiteFade whiteFade;
+    public LevelNumber levelNumber;
+
     const float killDistance = 1.25f;
     List<Human> humans = new List<Human>();
     int correctKillCount;
+    public bool IsGameOver { get; private set; }
+    const float endDelay = 2;
+    int currentLevel;
+    bool isTransitioning;
+
+    void Awake()
+    {
+        IsGameOver = false;
+    }
 
     void Start()
     {
-        SpawnHumans(8);
+        NextLevel();
+    }
+
+    void NextLevel()
+    {
+        correctKillCount = 0;
+        visionButton.SetActive(true);
+        killButton.SetActive(true);
+        isTransitioning = false;
+        currentLevel++;
+        whiteFade.Flash();
+        levelNumber.SetNumber(currentLevel);
+        Clear();        
+        SpawnHumans(currentLevel * 2);
     }
 
     void SpawnHumans(int count)
     {
-        humans.Clear();
         for (int i = 0; i < count; i++)
         {
             Human human = Instantiate(humanPrefab, GetHumanSpawnPos(), Quaternion.identity, humansTransform).GetComponent<Human>();
@@ -37,8 +66,12 @@ public class GameController : MonoBehaviour
         vision.Activate();
         foreach (var human in humans)
         {
-            human.ShowMark();
+            if (human && human.gameObject)
+            {
+                human.ShowMark();
+            }
         }
+        visionButton.SetActive(false);
     }
 
     public void DeactivateVision()
@@ -46,8 +79,23 @@ public class GameController : MonoBehaviour
         vision.Deactivate();
         foreach (var human in humans)
         {
-            human.HideMark();
+            if (human && human.gameObject && human.IsAlive)
+            {
+                human.HideMark();
+            }
         }
+    }
+
+    void Clear()
+    {
+        foreach (var human in humans)
+        {
+            if (human && human.gameObject && human.IsAlive)
+            {
+                human.Die();
+            }
+        }
+        humans.Clear();
     }
 
     public Vector3 GetHumanSpawnPos()
@@ -57,31 +105,54 @@ public class GameController : MonoBehaviour
 
     public void Kill()
     {
+        DeactivateVision();
         if (humans.Count > 0)
         {
             foreach (var human in humans)
             {
-                if (Vector3.Distance(human.transform.position, Vector3.zero) <= killDistance)
+                if (human && human.gameObject && human.IsAlive && Vector3.Distance(human.transform.position, Vector3.zero) <= killDistance)
                 {
                     if (human.IsMarked)
                     {
                         correctKillCount++;
                     }
+                    else
+                    {
+                        BeginEnd();
+                    }
                     human.Kill();
                 }
             }
         }
+
+        if (!isTransitioning && !IsGameOver && correctKillCount == currentLevel)
+        {
+            isTransitioning = true;
+            killButton.SetActive(false);
+            Invoke("NextLevel", endDelay);
+        }
     }
 
-    public void Reset()
+    public void Restart()
     {
-        if (humans.Count > 0)
+        SceneManager.LoadScene("Main");
+    }
+    
+    void BeginEnd()
+    {
+        if (IsGameOver)
         {
-            foreach (var human in humans)
-            {
-                human.Die();
-            }
+            return;
         }
-        SpawnHumans(8);
+        IsGameOver = true;
+        killButton.SetActive(false);
+        Invoke("End", endDelay);
+    }
+
+    void End()
+    {
+        killZone.SetActive(false);
+        endPanel.SetActive(true);
+        ActivateVision();
     }
 }

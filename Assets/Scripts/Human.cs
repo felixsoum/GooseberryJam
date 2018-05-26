@@ -17,18 +17,19 @@ public class Human : MonoBehaviour
     float wanderTimeMin = 1;
     float wanderTimeMax = 5;
     float wanderForce = 2;
-    bool isAlive = true;
-    float killForce = 50;
+    public bool IsAlive { get; private set; }
+    float killForce = 100;
 
     void Awake()
     {
+        IsAlive = true;
         rigidbody = GetComponent<Rigidbody2D>();
         Invoke("Wander", Random.Range(wanderTimeMin, wanderTimeMax));
     }
 
 	void OnMouseDown()
     {
-        if (!isAlive)
+        if (!IsAlive || gameController.IsGameOver)
         {
             return;
         }
@@ -40,7 +41,7 @@ public class Human : MonoBehaviour
 
     void OnMouseUp()
     {
-        if (!isAlive)
+        if (!IsAlive || gameController.IsGameOver)
         {
             return;
         }
@@ -52,7 +53,7 @@ public class Human : MonoBehaviour
 
     void Update()
     {
-        if (isAlive)
+        if (IsAlive)
         {
             animator.SetBool("IsWalking", rigidbody.velocity.magnitude > 0.075f);
             Vector3 pos = transform.position;
@@ -84,7 +85,7 @@ public class Human : MonoBehaviour
 
     void Wander()
     {
-        if (!isAlive)
+        if (!IsAlive)
         {
             return;
         }
@@ -114,13 +115,13 @@ public class Human : MonoBehaviour
 
     public void Kill()
     {
-        isAlive = false;
+        IsAlive = false;
         ShowMark();
         rigidbody.drag = 0;
         rigidbody.AddForce(Vector3.up * killForce, ForceMode2D.Force);
         Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
         feetCollider.enabled = false;
-        Invoke("Die", 5);
+        Invoke("Die", 2);
     }
 
     public void Die()
