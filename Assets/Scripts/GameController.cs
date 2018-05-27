@@ -122,10 +122,12 @@ public class GameController : MonoBehaviour
         DeactivateVision();
         if (humans.Count > 0)
         {
+            bool hasKilled = false;
             foreach (var human in humans)
             {
                 if (human && human.gameObject && human.IsAlive && Vector2.Distance(human.GetFeetPosition(), Vector2.zero) <= KillDistance)
                 {
+                    hasKilled = true;
                     if (human.IsMarked)
                     {
                         correctKillCount++;
@@ -137,7 +139,10 @@ public class GameController : MonoBehaviour
                     human.Kill();
                 }
             }
-            killAudio.Play();
+            if (hasKilled)
+            {
+                killAudio.Play();
+            }
         }
 
         if (!isTransitioning && !IsGameOver && correctKillCount == currentLevel)

@@ -73,7 +73,7 @@ public class Human : MonoBehaviour
             transform.localScale = scale;
         }
 
-        killIndicator.enabled = IsAlive && Vector2.Distance(Vector2.zero, GetFeetPosition()) <= GameController.KillDistance;
+        killIndicator.enabled = IsAlive && Vector2.Distance(Vector2.zero, GetFeetPosition()) <= GameController.KillDistance && humanSprite.enabled;
     }
 
     void FixedUpdate()
