@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        Cursor.SetCursor(cursorTexture, new Vector2(10, 70), CursorMode.ForceSoftware);
+        Cursor.SetCursor(cursorTexture, new Vector2(10, 10), CursorMode.ForceSoftware);
         NextLevel();
     }
 

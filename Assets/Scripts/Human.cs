@@ -20,12 +20,14 @@ public class Human : MonoBehaviour
     float wanderForce = 2;
     public bool IsAlive { get; private set; }
     float killForce = 100;
+    Animator spiritAnimator;
 
     void Awake()
     {
         IsAlive = true;
         rigidbody = GetComponent<Rigidbody2D>();
         Invoke("Wander", Random.Range(wanderTimeMin, wanderTimeMax));
+        spiritAnimator = spiritSprite.GetComponent<Animator>();
     }
 
 	void OnMouseDown()
@@ -125,6 +127,7 @@ public class Human : MonoBehaviour
         Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
         feetCollider.enabled = false;
         Invoke("Die", 2);
+        spiritAnimator.SetTrigger("Die");
     }
 
     public Vector2 GetFeetPosition()
@@ -140,6 +143,6 @@ public class Human : MonoBehaviour
     public void Mark()
     {
         IsMarked = true;
-        spiritSprite.GetComponent<Animator>().SetTrigger("Mark");
+        spiritAnimator.SetTrigger("Mark");
     }
 }

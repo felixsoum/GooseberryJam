@@ -8,6 +8,10 @@ TextureImporter:
     21300002: ghost_ss_1
     21300004: ghost_ss_2
     21300006: ghost_ss_3
+    21300008: ghost_ss_4
+    21300010: ghost_ss_5
+    21300012: ghost_ss_6
+    21300014: ghost_ss_7
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -109,7 +113,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 125
         width: 125
         height: 125
       alignment: 0
@@ -123,7 +127,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 125
-        y: 0
+        y: 125
         width: 125
         height: 125
       alignment: 0
@@ -137,7 +141,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 250
-        y: 0
+        y: 125
         width: 125
         height: 125
       alignment: 0
@@ -148,6 +152,62 @@ TextureImporter:
       tessellationDetail: 0
     - serializedVersion: 2
       name: ghost_ss_3
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 125
+        width: 125
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ghost_ss_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 125
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ghost_ss_5
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 0
+        width: 125
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ghost_ss_6
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 0
+        width: 125
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ghost_ss_7
       rect:
         serializedVersion: 2
         x: 375
