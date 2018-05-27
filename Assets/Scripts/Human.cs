@@ -10,6 +10,7 @@ public class Human : MonoBehaviour
     public SpriteRenderer spiritSprite;
     public GameObject deathEffectPrefab;
     public BoxCollider2D feetCollider;
+    public SpriteRenderer killIndicator;
 
     new Rigidbody2D rigidbody;
     GameController gameController;
@@ -71,6 +72,8 @@ public class Human : MonoBehaviour
             }
             transform.localScale = scale;
         }
+
+        killIndicator.enabled = IsAlive && Vector2.Distance(Vector2.zero, GetFeetPosition()) <= GameController.KillDistance;
     }
 
     void FixedUpdate()
@@ -124,7 +127,7 @@ public class Human : MonoBehaviour
         Invoke("Die", 2);
     }
 
-    public Vector3 GetFeetPosition()
+    public Vector2 GetFeetPosition()
     {
         return transform.position + new Vector3(feetCollider.offset.x, feetCollider.offset.y, 0);
     }

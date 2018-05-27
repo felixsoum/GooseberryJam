@@ -261,6 +261,7 @@ MonoBehaviour:
   killZone: {fileID: 1986456224}
   whiteFade: {fileID: 312579261}
   levelNumber: {fileID: 1808735073}
+  cursorTexture: {fileID: 2800000, guid: 1d7edd75f2475fe4180c9b3fbf290160, type: 3}
   killAudio: {fileID: 228008723}
   visionAudio: {fileID: 228008722}
   nextAudio: {fileID: 228008724}

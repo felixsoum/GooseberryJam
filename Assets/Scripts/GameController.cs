@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour
     public AudioSource visionAudio;
     public AudioSource nextAudio;
 
-    const float killDistance = 1.5f;
+    public const float KillDistance = 1.25f;
     List<Human> humans = new List<Human>();
     int correctKillCount;
     public bool IsGameOver { get; private set; }
@@ -124,7 +124,7 @@ public class GameController : MonoBehaviour
         {
             foreach (var human in humans)
             {
-                if (human && human.gameObject && human.IsAlive && Vector3.Distance(human.GetFeetPosition(), Vector3.zero) <= killDistance)
+                if (human && human.gameObject && human.IsAlive && Vector2.Distance(human.GetFeetPosition(), Vector2.zero) <= KillDistance)
                 {
                     if (human.IsMarked)
                     {
