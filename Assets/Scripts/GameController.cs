@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour
 
     void Awake()
     {
+        Screen.SetResolution(480, 720, false);
         IsGameOver = false;
     }
 

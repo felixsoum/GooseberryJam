@@ -177,6 +177,20 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+    - serializedVersion: 2
+      name: character1_all_5
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 0
+        width: 125
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 
