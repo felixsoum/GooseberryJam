@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
     public WhiteFade whiteFade;
     public LevelNumber levelNumber;
     public Texture2D cursorTexture;
+    public GameObject credits;
 
     public AudioSource killAudio;
     public AudioSource visionAudio;
@@ -173,6 +174,7 @@ public class GameController : MonoBehaviour
     {
         killZone.SetActive(false);
         endPanel.SetActive(true);
+        credits.SetActive(true);
         ActivateVision();
     }
 }
