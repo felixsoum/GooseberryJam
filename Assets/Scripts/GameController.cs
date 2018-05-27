@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     public GameObject killZone;
     public WhiteFade whiteFade;
     public LevelNumber levelNumber;
+    public Texture2D cursorTexture;
 
     public AudioSource killAudio;
     public AudioSource visionAudio;
@@ -34,6 +35,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        Cursor.SetCursor(cursorTexture, new Vector2(10, 70), CursorMode.ForceSoftware);
         NextLevel();
     }
 

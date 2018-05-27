@@ -99,13 +99,13 @@ public class Human : MonoBehaviour
     public void ShowMark()
     {
         humanSprite.enabled = false;
-        spiritSprite.enabled = true;
+        spiritSprite.color = new Color(1, 1, 1, 1);
     }
 
     public void HideMark()
     {
         humanSprite.enabled = true;
-        spiritSprite.enabled = false;
+        spiritSprite.color = new Color(1, 1, 1, 0);
     }
 
     public void SetGameController(GameController gc)
@@ -137,6 +137,6 @@ public class Human : MonoBehaviour
     public void Mark()
     {
         IsMarked = true;
-        spiritSprite.color = Color.red;
+        spiritSprite.GetComponent<Animator>().SetTrigger("Mark");
     }
 }
